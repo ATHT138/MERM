@@ -1,0 +1,64 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Dependency directories
+socket-client/node_modules/
+socket-server/node_modules/
+
+# Build directories
+socket-client/build/
+socket-server/build/
+dist/
+tmp/
+out/
+
+# Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+
+# Miscellaneous
+*.swp
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-project
+*.code-workspace
+
+# Test coverage reports
+coverage/
+*.lcov
+*.lcov.info
+
+# Serverless directories
+.serverless/
+.webpack/
+
+# Temporary files
+*.tmp
+*.temp
