@@ -31,7 +31,7 @@ const WatchDetail = () => {
   };
 
   return (
-    <DataRenderer error={error} isLoading={loading}>
+    <DataRenderer className="container" error={error} isLoading={loading}>
       <div className="container p-4 mx-auto">
         <WatchDetailCard data={watch?.data} />
         <CommentWatch onNewComment={handleNewComment} />

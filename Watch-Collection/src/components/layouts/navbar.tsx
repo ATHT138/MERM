@@ -33,7 +33,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const path = location.pathname;
-    const savedNav = getItem("currentNav");
+    const savedNav = getItem("redirectPath");
     if (savedNav && savedNav !== path) {
       setCurrent(savedNav);
     } else if (path === "/") {
@@ -45,14 +45,14 @@ export default function Navbar() {
 
   const handleLogout = () => {
     removeItem("token");
-    removeItem("currentNav");
+    removeItem("redirectPath");
     setUser(null);
     navigate("/");
   };
 
   const handleNavClick = (name: string, link: string) => {
     setCurrent(name);
-    localStorage.setItem("currentNav", name);
+    localStorage.setItem("redirectPath", name);
     navigate(link);
   };
 

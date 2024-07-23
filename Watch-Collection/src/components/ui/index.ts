@@ -13,3 +13,6 @@ export * from "./dialog.tsx";
 export * from "./table.tsx";
 export * from "./dropdown-menu.tsx";
 export * from "./switch.tsx";
+export * from "./badge.tsx";
+export * from "./separator.tsx";
+export * from "./checkbox.tsx";

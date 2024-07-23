@@ -52,34 +52,53 @@ exports.getAllWatches = async (req, res, next) => {
     page: parseInt(page, 10),
     limit: parseInt(limit, 10),
   };
+
   try {
     let query = {};
-    if (page < 0) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Page undefinde" });
+
+    // Check for valid page number
+    if (options.page < 1) {
+      return res.status(404).json({
+        success: false,
+        message: "Page number must be greater than 0",
+      });
     }
 
+    // Process watchName query
     if (watchName) {
       query.watchName = { $regex: watchName, $options: "i" };
     }
 
+    // Process brandName query
     if (brandName) {
-      const brand = await Brand.findOne({ brandName });
-      if (!brand) {
+      let brands;
+      if (Array.isArray(brandName)) {
+        // If brandName is an array, search for all brands in the array
+        brands = await Brand.find({ brandName: { $in: brandName } });
+      } else {
+        // If brandName is a single value, convert it to an array
+        brands = await Brand.find({ brandName: brandName });
+      }
+
+      if (brands.length === 0) {
         return res
           .status(404)
-          .json({ success: false, message: "Brand not found" });
+          .json({ success: false, message: "No brands found" });
       }
-      query.brand = brand._id;
+
+      // Extract brand IDs from the found brands
+      const brandIds = brands.map((brand) => brand._id);
+      query.brand = { $in: brandIds };
     }
 
+    // Fetch watches with pagination
     const watches = await Watch.find(query)
       .populate("brand")
       .skip((options.page - 1) * options.limit)
       .limit(options.limit)
       .exec();
 
+    // Count total watches matching the query
     const totalWatches = await Watch.countDocuments(query);
     const totalPages = Math.ceil(totalWatches / options.limit);
 

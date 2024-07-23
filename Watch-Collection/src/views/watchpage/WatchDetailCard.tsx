@@ -1,6 +1,7 @@
+import RatingRender from "@/components/ratingRender";
+import { Badge, Separator } from "@/components/ui";
+import { FormatType, formatFromISOString } from "@/lib/formatDate";
 import { WatchDetail } from "@/models";
-import RatingRender from "../../components/ratingRender";
-import { FormatType, formatFromISOString } from "../../lib/formatDate";
 
 interface WatchDetailCardProps {
   data?: WatchDetail;
@@ -8,7 +9,7 @@ interface WatchDetailCardProps {
 
 const WatchDetailCard = ({ data }: WatchDetailCardProps) => {
   return (
-    <div className="relative grid grid-cols-1 gap-4 mt-4 overflow-hidden bg-white rounded-lg shadow-md sm:grid-cols-2">
+    <div className="relative grid grid-cols-1 gap-4 mt-4 overflow-hidden bg-white rounded-lg shadow-md sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <div className="overflow-hidden">
         <img
           className="object-cover object-center w-full h-auto"
@@ -16,32 +17,40 @@ const WatchDetailCard = ({ data }: WatchDetailCardProps) => {
           alt={data?.watch.watchName}
         />
       </div>
-      <div className="p-6 pb-16">
-        <h1 className="mb-2 text-6xl font-bold">{data?.watch.watchName}</h1>
-        <div className="flex items-center">
+      <div className="col-span-1 p-6 pb-16 lg:col-span-2 xl:col-span-3">
+        <div className="flex flex-wrap items-center justify-start gap-5 mb-2">
+          <h1 className="text-2xl font-bold sm:text-4xl">
+            {data?.watch.watchName}
+          </h1>
+          <Badge
+            color="yellow"
+            className="text-sm sm:text-xl whitespace-nowrap"
+          >
+            $ {data?.watch.price}
+          </Badge>
+        </div>
+        <div className="flex flex-wrap items-center mb-3 space-x-3 text-sm sm:space-x-1 lg:space-x-2 lg:h-5">
           <RatingRender rating={data?.totalRate} />
-          &nbsp;
           <div className="font-semibold text-gray-500">
             ({data?.watch.comments.length} comments)
           </div>
+          <Separator orientation="vertical" />
+          <p className="text-gray-700">
+            <span className="font-semibold">{data?.nameBrand}</span>
+          </p>
         </div>
-        <div className="ml-1 font-semibold text-gray-500">
+        <div className="mb-4 ml-1 font-semibold text-gray-500">
           {formatFromISOString(
             data?.watch.createdAt ?? "",
             FormatType.DATETIME
           )}
         </div>
-        <p className="mt-5 mb-4 text-gray-700">
-          Brand: <span className="font-semibold">{data?.nameBrand}</span>
-        </p>
-        <p className="mb-4 text-gray-700">
-          Price: <span className="font-semibold">$ {data?.watch.price}</span>
-        </p>
+
         <p>Description:</p>
-        <p className="p-2 mt-4 mb-4 text-gray-700 rounded-md bg-slate-200">
+        <p className="p-2 mt-2 mb-4 text-gray-700 rounded-md bg-slate-200">
           {data?.watch.watchDescription}
         </p>
-        <div className="absolute flex gap-4 right-5 bottom-5">
+        <div className="absolute flex flex-wrap gap-4 right-5 bottom-5">
           <button className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-300">
             Add to Cart
           </button>
