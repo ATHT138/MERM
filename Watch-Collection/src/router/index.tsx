@@ -4,12 +4,16 @@ import LoginPage from "@/views/authpage/LoginPage";
 import RegisterPage from "@/views/authpage/RegisterPage";
 import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import ContactPage from "../views/contactpage/contact_page";
+import About from "../views/aboutpage/about_page";
+import PaymentPage from "../views/paymentpage/payment_page";
 
 /*eslint-disable*/
 const HomePage = lazy(() => import("@/views/homepage/HomePage"));
 const WatchPage = lazy(() => import("@/views/watchpage/WatchPage"));
 const WatchDetail = lazy(() => import("@/views/watchpage/WatchDetail"));
 const ProfilePage = lazy(() => import("@/views/userpage/ProfilePage"));
+const ShoppingPage = lazy(() => import("@/views/shoppingpage/shopping_page"));
 const DashboardPage = lazy(
   () => import("@/components/layouts/dashboardLayout")
 );
@@ -98,6 +102,26 @@ const routes = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: "shopping-cart",
+        element: (
+          <Suspense fallback={<div>Loading</div>}>
+            <ShoppingPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "contact-us",
+        element: <ContactPage />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "checkout",
+        element: <PaymentPage />,
       },
     ],
   },

@@ -9,7 +9,7 @@ interface WatchListProps {
 const WatchList = ({ dataList, maxItems }: WatchListProps) => {
   if (!dataList || dataList.length === 0) {
     return (
-      <div className="flex items-center justify-center text-5xl font-bold text-gray-500 h-au p-28">
+      <div className="flex items-center justify-center w-full h-full text-5xl font-bold text-gray-500 p-28">
         No watches found
       </div>
     );

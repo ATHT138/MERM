@@ -17,6 +17,13 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        foreground: "#333",
+        "secondary-foreground": "#666",
+        "muted-foreground": "#999",
+        primary: "#334155",
+        "primary-foreground": "#FFFFFF",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

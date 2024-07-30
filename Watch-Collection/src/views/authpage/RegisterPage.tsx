@@ -9,7 +9,7 @@ const RegisterPage = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-lg">
           <img
             className="w-auto h-10 mx-auto"
-            src={assert.image}
+            src={assert.image.mark}
             alt="Your Company"
           />
           <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">

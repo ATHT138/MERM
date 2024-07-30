@@ -4,6 +4,22 @@ const Member = require("../models/member");
 
 const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[0-9]).{6,}$/;
 
+const validatePassword = (password) => {
+  if (password.length < 6) {
+    return "Password must be at least 6 characters long";
+  }
+  if (/\s/.test(password)) {
+    return "Password cannot contain spaces";
+  }
+  if (!/[a-z]/.test(password)) {
+    return "Password must contain at least one lowercase letter";
+  }
+  if (!passwordRegex.test(password)) {
+    return "Password must have a special character, at least one uppercase letter, and at least one number";
+  }
+  return null;
+};
+
 exports.register = async (req, res) => {
   try {
     const { memberName, password, YOB, name } = req.body;
@@ -14,23 +30,15 @@ exports.register = async (req, res) => {
         .send({ msg: "Member's name cannot contain spaces" });
     }
 
-    if (password.length < 6) {
-      return res
-        .status(400)
-        .send({ msg: "Password must be at least 6 characters long" });
-    }
-
-    if (!passwordRegex.test(password)) {
-      return res.status(400).send({
-        msg: "Password must have a special character, at least one uppercase letter, and at least one number",
-      });
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      return res.status(400).send({ msg: passwordError });
     }
 
     const user = await Member.findOne({ memberName });
 
     const nameUser = await Member.findOne({ name }).populate("name");
 
-    console.log(nameUser);
     if (nameUser) {
       return res.status(400).send({ msg: "Name already exists" });
     }

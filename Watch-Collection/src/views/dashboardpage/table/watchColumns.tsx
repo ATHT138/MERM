@@ -99,7 +99,7 @@ const WatchColumns = (
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={(data) => {
+              onClick={() => {
                 handleEditWatch(watch);
               }}
             >

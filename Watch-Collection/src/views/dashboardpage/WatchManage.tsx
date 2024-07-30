@@ -3,24 +3,20 @@ import useFetch from "@/hooks/useFetch";
 import { Response, Watches } from "@/models";
 import { useCallback, useMemo, useState } from "react";
 import SearchFilter from "../watchpage/SearchFilter";
-import { ParamsSearcHFilter } from "../watchpage/WatchPage";
 import DialogCustom from "./dialog";
 import FormWatch from "./form/FormWatch";
 import { DataTable } from "./table/DataTable";
 import WatchColumns from "./table/watchColumns";
 
 const WatchManage = () => {
-  const [searchFilter, setSearchFilter] = useState<ParamsSearcHFilter>({
-    watchName: "",
-    brandName: "",
-  });
+  const [watchName, setWatchName] = useState<string>("");
 
   const [selectedWatch, setSelectedWatch] = useState<Watches | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const fetchOptions = useMemo(
-    () => ({ params: searchFilter }),
-    [searchFilter]
+    () => ({ params: { name: watchName } }),
+    [watchName]
   );
 
   const { data: watches, refetch } = useFetch<Response<Watches>>(
@@ -28,8 +24,8 @@ const WatchManage = () => {
     fetchOptions
   );
 
-  const handleSearchFilter = useCallback((searchFilter: ParamsSearcHFilter) => {
-    setSearchFilter(searchFilter);
+  const handleSearchFilter = useCallback((watchName: string) => {
+    setWatchName(watchName);
   }, []);
 
   const handleEditWatch = (watch: Watches) => {

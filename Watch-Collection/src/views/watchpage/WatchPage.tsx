@@ -36,12 +36,16 @@ const WatchPage: React.FC<WatchListProps> = () => {
   }, []);
 
   return (
-    <div className="px-20 py-4">
+    <div className="w-full px-32 py-4">
       <div className="flex flex-row flex-1 gap-5">
         <FilterBrand handleBrand={handleBrand} />
-        <div className="mb-4 ">
+        <div className="w-full h-full mb-4">
           <SearchFilter className="mb-5" onChange={handleSearch} />
-          <DataRenderer error={error} isLoading={loading}>
+          <DataRenderer
+            className="w-full h-full"
+            error={error}
+            isLoading={loading}
+          >
             <WatchList dataList={watchList?.data} />
           </DataRenderer>
         </div>

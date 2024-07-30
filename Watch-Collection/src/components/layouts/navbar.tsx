@@ -1,3 +1,8 @@
+import assert from "@/asserts";
+import { Button } from "@/components/ui";
+import { getItem, removeItem } from "@/lib/localStorage";
+import Show from "@/lib/show";
+import { useUserZustand } from "@/stores";
 import {
   Disclosure,
   DisclosureButton,
@@ -7,14 +12,10 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import assert from "@/asserts";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Show from "@/lib/show";
-import { Button } from "@/components/ui";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useUserZustand } from "@/stores";
-import { getItem, removeItem } from "@/lib/localStorage";
+import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -29,6 +30,8 @@ export default function Navbar() {
   const navigation = [
     { name: "Home", link: "/" },
     { name: "Watches", link: "/watches" },
+    { name: "Contact", link: "/contact-us" },
+    { name: "About", link: "/about" },
   ];
 
   useEffect(() => {
@@ -52,12 +55,11 @@ export default function Navbar() {
 
   const handleNavClick = (name: string, link: string) => {
     setCurrent(name);
-    localStorage.setItem("redirectPath", name);
     navigate(link);
   };
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="py-2 bg-gray-800">
       {({ open }) => (
         <>
           <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -105,15 +107,27 @@ export default function Navbar() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {user && (
-                  <div className="mr-3 text-white">Welcome, {user?.name}</div>
+                  <div className="flex flex-row items-center gap-6 ">
+                    <div className="text-white ">Welcome, {user?.name}</div>
+                    <div className="flex gap-2">
+                      <button type="button">
+                        <BellIcon
+                          className="text-gray-400 size-6 hover:text-white"
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => navigate("/shopping-cart")}
+                      >
+                        <ShoppingCart
+                          className="text-gray-400 size-6 hover:text-white"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
+                  </div>
                 )}
-                <button
-                  type="button"
-                  className="relative p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="w-6 h-6" aria-hidden="true" />
-                </button>
 
                 {/* Profile dropdown */}
                 <Show>
@@ -133,7 +147,7 @@ export default function Navbar() {
                         <MenuButton className="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="w-8 h-8 rounded-full"
+                            className="rounded-full size-10"
                             src={assert.avatar}
                             alt=""
                           />

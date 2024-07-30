@@ -49,12 +49,14 @@ const brandRoutes = require("./routes/brand");
 const watchRoutes = require("./routes/watch");
 const commentRoutes = require("./routes/comment");
 const memberRoutes = require("./routes/member");
+const cartRoutes = require("./routes/cart");
 
 app.use("/auth", authRoutes);
 app.use("/brands", brandRoutes);
 app.use("/watches", watchRoutes);
 app.use("/comments", commentRoutes);
 app.use("/members", memberRoutes);
+app.use("/carts", cartRoutes);
 
 // Error handler
 app.use(errorHandler);

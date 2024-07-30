@@ -16,7 +16,6 @@ function App() {
       const token = getItem("token");
       if (token) {
         const user: checkToken = jwtDecode(token);
-        console.log(user);
         setUser(user);
       }
     };

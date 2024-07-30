@@ -2,12 +2,40 @@ import RatingRender from "@/components/ratingRender";
 import { Badge, Separator } from "@/components/ui";
 import { FormatType, formatFromISOString } from "@/lib/formatDate";
 import { WatchDetail } from "@/models";
+import { AddToCart } from "../../features/cardApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface WatchDetailCardProps {
   data?: WatchDetail;
 }
 
 const WatchDetailCard = ({ data }: WatchDetailCardProps) => {
+  const navigator = useNavigate();
+  const onClickAddToCard = () => {
+    const addData = AddToCart(data?.watch._id ?? "", 1);
+
+    addData
+      .then(() => {
+        toast.success("Add to cart successfully");
+      })
+      .catch(() => {
+        toast.error("Please login to add to cart");
+      });
+  };
+
+  const onClickBuyNow = () => {
+    const addData = AddToCart(data?.watch._id ?? "", 1);
+
+    addData
+      .then(() => {
+        navigator("/checkout");
+      })
+      .catch(() => {
+        toast.error("Please login to add to cart");
+      });
+  };
+
   return (
     <div className="relative grid grid-cols-1 gap-4 mt-4 overflow-hidden bg-white rounded-lg shadow-md sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <div className="overflow-hidden">
@@ -51,10 +79,16 @@ const WatchDetailCard = ({ data }: WatchDetailCardProps) => {
           {data?.watch.watchDescription}
         </p>
         <div className="absolute flex flex-wrap gap-4 right-5 bottom-5">
-          <button className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-300">
+          <button
+            className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-300"
+            onClick={onClickAddToCard}
+          >
             Add to Cart
           </button>
-          <button className="px-4 py-2 ml-4 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-300">
+          <button
+            className="px-4 py-2 ml-4 font-bold text-white bg-yellow-500 rounded hover:bg-yellow-300"
+            onClick={() => onClickBuyNow()}
+          >
             Buy Now
           </button>
         </div>

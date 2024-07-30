@@ -21,6 +21,7 @@ import {
 import { RegisterSchema } from "../../schemas";
 import { axiosInstance } from "../../configs";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 interface RegisterRequest {
   memberName: string;
@@ -65,9 +66,10 @@ const RegisterForm = () => {
         toast.success("Successfully registered, please back to login!");
         console.log(res.data);
       })
-      .catch((err) => {
-        toast.error("Failed to register");
-        console.log(err);
+      .catch((err: AxiosError) => {
+        const errorMessage =
+          (err.response?.data as { msg: string })?.msg || "An error occurred";
+        toast.error(errorMessage);
       });
   };
 

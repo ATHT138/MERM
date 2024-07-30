@@ -16,3 +16,4 @@ export * from "./switch.tsx";
 export * from "./badge.tsx";
 export * from "./separator.tsx";
 export * from "./checkbox.tsx";
+export * from "./carousel.tsx";
